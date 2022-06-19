@@ -380,11 +380,11 @@ extension LTMorphingLabel {
                         )
                     )
                     // For emojis
-                    currentFontSize = max(0.0001, font.pointSize - fontEase)
-                    currentAlpha = CGFloat(1.0 - progress)
+                    currentFontSize = font.pointSize // max(0.0001, font.pointSize - fontEase)
+                    currentAlpha = 0 // CGFloat(1.0 - progress)
                     currentRect = previousRects[index].offsetBy(
                         dx: 0,
-                        dy: CGFloat(font.pointSize - currentFontSize)
+                        dy: 0 // CGFloat(font.pointSize - currentFontSize)
                     )
                 }
             }
@@ -405,26 +405,26 @@ extension LTMorphingLabel {
             
             let currentRect = newRects[index]
             var currentFontSize = CGFloat(
-                LTEasing.easeOutQuint(progress, 0, Float(font.pointSize))
+                LTEasing.easeOutQuint(1, 0, Float(font.pointSize))
             )
             
             if let closure = effectClosures[
                 "\(morphingEffect.description)\(LTMorphingPhases.appear)"
                 ] {
-                    return closure(char, index, progress)
+                    return closure(char, index, 1)
             } else {
                 currentFontSize = CGFloat(
                     LTEasing.easeOutQuint(progress, 0.0, Float(font.pointSize))
                 )
                 // For emojis
-                currentFontSize = max(0.0001, currentFontSize)
+                currentFontSize = font.pointSize // max(0.0001, currentFontSize)
                 
                 let yOffset = CGFloat(font.pointSize - currentFontSize)
                 
                 return LTCharacterLimbo(
                     char: char,
                     rect: currentRect.offsetBy(dx: 0, dy: yOffset),
-                    alpha: CGFloat(morphingProgress),
+                    alpha: 1, // CGFloat(morphingProgress),
                     size: currentFontSize,
                     drawingProgress: 0.0
                 )
